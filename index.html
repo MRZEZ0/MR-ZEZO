@@ -13,7 +13,7 @@
     <style>
         :root {
             --bg-deep: #050811;
-            --bg-card: rgba(15, 23, 42, 0.7);
+            --bg-card: rgba(15, 23, 42, 0.75);
             --border-glow: rgba(56, 189, 248, 0.25);
             
             --cool-blue: #38bdf8;
@@ -44,7 +44,7 @@
             width: 100%;
         }
 
-        /* Desktop Only Cursor */
+        /* Desktop Cursor */
         @media (min-width: 769px) {
             * { cursor: none; }
             #custom-cursor {
@@ -112,7 +112,7 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Particles Canvas */
+        /* Canvas */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -126,7 +126,7 @@
 
         .en-font { font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* Floating WhatsApp Button (Mobile Responsive) */
+        /* WhatsApp Button */
         .float-wa {
             position: fixed;
             bottom: 20px;
@@ -186,7 +186,7 @@
             transition: 0.3s;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             padding: 4rem 7% 3rem;
             display: grid;
@@ -220,7 +220,6 @@
             filter: drop-shadow(0 2px 10px rgba(56, 189, 248, 0.3));
         }
 
-        /* Typing Effect */
         .typing-container {
             font-size: 1.3rem;
             color: var(--neon-blue);
@@ -246,7 +245,6 @@
             font-weight: 700;
         }
 
-        /* 3D Cards */
         .img-card {
             width: 310px;
             height: 400px;
@@ -262,16 +260,14 @@
 
         .img-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Sections */
         section { padding: 4rem 7%; position: relative; z-index: 2; }
         .title-box { text-align: center; margin-bottom: 3.2rem; }
         .title-box h2 { font-size: 2.2rem; font-weight: 900; color: var(--text-main); margin-bottom: 0.4rem; }
         .title-box p { color: var(--gold-light); font-size: 1.05rem; font-weight: 700; }
 
-        /* Grids */
         .features-grid, .reviews-grid, .schedules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.8rem;
         }
 
@@ -340,7 +336,7 @@
         .location-info h2 { font-size: 1.4rem; color: var(--gold-light); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 10px; font-weight: 800; }
         .location-info p { font-size: 1.1rem; color: var(--text-main); font-weight: 700; }
 
-        /* Button */
+        /* Buttons */
         .btn-shimmer {
             display: inline-block;
             padding: 0.95rem 2.5rem;
@@ -371,61 +367,186 @@
 
         @keyframes shimmer { 0% { transform: translateX(-100%) rotate(30deg); } 100% { transform: translateX(100%) rotate(30deg); } }
 
-        /* 📱 ULTRA MOBILE OPTIMIZATIONS (Max Width 768px) */
+        /* Gallery Modal Pop-up */
+        #gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(3, 5, 12, 0.95);
+            backdrop-filter: blur(25px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s ease;
+            padding: 15px;
+        }
+
+        #gallery-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gallery-modal-content {
+            background: rgba(15, 23, 42, 0.98);
+            border: 1.5px solid var(--cool-blue);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 1100px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 2rem 1.2rem;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.4);
+            position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .modal-header-sticky {
+            position: sticky;
+            top: -2rem;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 0.5rem 0 1rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glow);
+            margin-bottom: 1.2rem;
+        }
+
+        .close-gallery-modal {
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-glow);
+            transition: 0.3s;
+        }
+
+        .close-gallery-modal:hover { color: var(--cool-blue); transform: rotate(90deg); }
+
+        .modal-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .modal-gallery-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+        .modal-gallery-card:hover {
+            border-color: var(--cool-blue);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .modal-gallery-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Full Single Image View Modal */
+        #single-img-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.96);
+            backdrop-filter: blur(20px);
+            z-index: 100005;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+            padding: 15px;
+        }
+
+        #single-img-modal.active { opacity: 1; visibility: visible; }
+
+        #single-img-modal img {
+            max-width: 95%;
+            max-height: 85vh;
+            border-radius: 16px;
+            border: 2px solid var(--cool-blue);
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.5);
+            object-fit: contain;
+        }
+
+        /* 📱 ULTRA MOBILE RESPONSIVE TUNING */
         @media (max-width: 768px) {
-            nav { padding: 0.9rem 5%; }
-            .logo { font-size: 1.35rem; }
+            nav { padding: 0.8rem 4%; }
+            .logo { font-size: 1.3rem; }
             .nav-links { display: none; }
             
             .hero {
                 grid-template-columns: 1fr;
                 text-align: center;
-                padding: 2.2rem 5% 1.5rem;
-                gap: 1.8rem;
+                padding: 2rem 4% 1.5rem;
+                gap: 1.5rem;
                 min-height: auto;
             }
 
-            .hero-text .subtitle-tag { font-size: 0.85rem; padding: 0.35rem 0.9rem; }
-            .hero-text h1 { font-size: 2.2rem; }
-            .typing-container { font-size: 1.1rem; justify-content: center; min-height: 35px; }
-            .hero-badges { justify-content: center; gap: 0.5rem; }
-            .badge { font-size: 0.8rem; padding: 0.4rem 0.85rem; }
+            .hero-text .subtitle-tag { font-size: 0.8rem; padding: 0.3rem 0.8rem; }
+            .hero-text h1 { font-size: 2.1rem; }
+            .typing-container { font-size: 1rem; justify-content: center; min-height: 30px; }
+            .hero-badges { justify-content: center; gap: 0.4rem; }
+            .badge { font-size: 0.78rem; padding: 0.35rem 0.75rem; }
             
-            .img-card { width: 250px; height: 330px; border-radius: 18px; }
+            .img-card { width: 240px; height: 320px; border-radius: 18px; }
             
-            section { padding: 2.5rem 5%; }
-            .title-box { margin-bottom: 2rem; }
-            .title-box h2 { font-size: 1.6rem; }
-            .title-box p { font-size: 0.95rem; }
+            section { padding: 2.2rem 4%; }
+            .title-box { margin-bottom: 1.8rem; }
+            .title-box h2 { font-size: 1.5rem; }
+            .title-box p { font-size: 0.9rem; }
             
             .features-grid, .reviews-grid, .schedules-grid {
                 grid-template-columns: 1fr;
-                gap: 1.2rem;
+                gap: 1rem;
             }
 
-            .glass-box { padding: 1.4rem; border-radius: 16px; }
+            .glass-box { padding: 1.2rem; border-radius: 16px; }
+            .schedule-header h3 { font-size: 1.25rem; }
+            .schedule-table th, .schedule-table td { padding: 0.7rem 0.2rem; font-size: 0.85rem; }
+            .time-badge { font-size: 0.8rem; padding: 0.2rem 0.55rem; }
             
-            .schedule-header h3 { font-size: 1.3rem; }
-            .schedule-table th, .schedule-table td { padding: 0.75rem 0.2rem; font-size: 0.88rem; }
-            .time-badge { font-size: 0.82rem; padding: 0.25rem 0.6rem; }
-            
-            .location-section { padding: 1rem 5% 2.5rem; }
+            .location-section { padding: 1rem 4% 2rem; }
             .location-card {
                 text-align: center;
                 justify-content: center;
                 flex-direction: column;
-                padding: 1.5rem 1.2rem;
-                gap: 1.2rem;
+                padding: 1.4rem 1rem;
+                gap: 1.1rem;
             }
 
-            .location-info h2 { font-size: 1.25rem; justify-content: center; }
-            .location-info p { font-size: 0.98rem; }
+            .location-info h2 { font-size: 1.18rem; justify-content: center; }
+            .location-info p { font-size: 0.92rem; }
 
             .btn-shimmer {
                 width: 100%;
                 display: block;
-                padding: 0.9rem 1.5rem;
-                font-size: 1rem;
+                padding: 0.85rem 1.2rem;
+                font-size: 0.98rem;
             }
 
             .float-wa {
@@ -435,10 +556,136 @@
                 bottom: 15px;
                 left: 15px;
             }
+
+            /* Modal Mobile Optimization */
+            .gallery-modal-content { padding: 1.2rem 0.8rem; border-radius: 18px; }
+            .modal-gallery-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; }
+            .modal-gallery-card img { height: 180px; }
+            .modal-header-sticky h3 { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Lightbox Modal Single Image -->
+    <div id="single-img-modal">
+        <span class="close-gallery-modal" onclick="closeSingleModal()" style="position: absolute; top: 15px; right: 15px; z-index: 100010;">&times;</span>
+        <img id="single-img-target" src="" alt="المعاينة">
+    </div>
+
+    <!-- Gallery Pop-up Modal (14 Images) -->
+    <div id="gallery-modal">
+        <div class="gallery-modal-content">
+            <div class="modal-header-sticky">
+                <h3 style="color: var(--gold-light); font-size: 1.2rem; font-weight: 800;">
+                    📸 معرض آراء الطلاب (14 تقييم)
+                </h3>
+                <span class="close-gallery-modal" onclick="closeGalleryModal()">&times;</span>
+            </div>
+            
+            <div class="modal-gallery-grid">
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+1')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+1" alt="تقييم 1">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 1
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+2')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+2" alt="تقييم 2">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 2
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+3')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+3" alt="تقييم 3">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 3
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+4')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+4" alt="تقييم 4">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 4
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+5')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+5" alt="تقييم 5">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 5
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+6')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+6" alt="تقييم 6">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 6
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+7')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+7" alt="تقييم 7">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 7
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+8')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+8" alt="تقييم 8">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 8
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+9')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+9" alt="تقييم 9">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 9
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+10')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+10" alt="تقييم 10">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 10
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+11')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+11" alt="تقييم 11">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 11
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+12')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+12" alt="تقييم 12">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 12
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+13')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+13" alt="تقييم 13">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 13
+                    </div>
+                </div>
+
+                <div class="modal-gallery-card" onclick="openSingleModal('https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+14')">
+                    <img src="https://via.placeholder.com/600x800/1e293b/38bdf8?text=Review+14" alt="تقييم 14">
+                    <div style="padding: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--cool-blue); font-weight: 700;">
+                        <i class="fa-solid fa-message"></i> تقييم ورأي 14
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Preloader -->
     <div id="preloader">
@@ -446,7 +693,7 @@
         <div class="loader-text en-font">MR. ZEZO EXECUTIVE ACADEMY</div>
     </div>
 
-    <!-- Custom Cursor & Mouse Glow (Desktop Only) -->
+    <!-- Custom Cursor & Mouse Glow -->
     <div id="custom-cursor"></div>
     <div id="mouse-glow"></div>
 
@@ -466,8 +713,9 @@
         <ul class="nav-links">
             <li><a href="#about">الأكاديمية</a></li>
             <li><a href="#features">المميزات</a></li>
-            <li><a href="#reviews">آراء الطلاب</a></li>
+            <li><a href="#reviews">تقييمات النصية</a></li>
             <li><a href="#schedule">المواعيد والمقر</a></li>
+            <li><a href="#gallery-trigger">معرض الصور</a></li>
             <li><a href="#contact">التواصل</a></li>
         </ul>
     </nav>
@@ -478,7 +726,6 @@
             <span class="subtitle-tag en-font">6 سنوات من الخبرة والعطاء (2026)</span>
             <h1>Mr. Zezo<br><span>مستر عبدالعزيز الفقي</span></h1>
             
-            <!-- Typing Effect Container -->
             <div class="typing-container en-font">
                 <span id="typed-text"></span><span class="cursor-blink">|</span>
             </div>
@@ -647,12 +894,27 @@
         </div>
     </div>
 
+    <!-- Gallery Pop-up Trigger Banner (في آخر الموقع) -->
+    <section id="gallery-trigger" style="text-align: center; padding: 2.5rem 4%;" data-aos="zoom-in">
+        <div class="glass-box" style="padding: 2rem 1.2rem; border: 2px dashed var(--cool-blue); background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,58,138,0.3));">
+            <h2 style="font-size: 1.6rem; font-weight: 900; color: var(--gold-light); margin-bottom: 0.6rem;">
+                📸 معرض صور ورسائل آراء الطلاب (14 تقييم)
+            </h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.92rem; font-weight: 700;">
+                شاهد سكرين شوت ورسائل التقييمات الحقيقية في إطار منبثق فخم بدون زحمة في الموقع
+            </p>
+            <button onclick="openGalleryModal()" class="btn-shimmer" style="border: none; cursor: pointer; font-size: 1rem; padding: 0.85rem 2rem;">
+                <i class="fa-solid fa-images"></i> فتح معرض التقييمات المصورة
+            </button>
+        </div>
+    </section>
+
     <!-- Footer -->
     <section id="contact" style="text-align: center; border-top: 1px solid var(--border-glow);" data-aos="fade-up">
         <div class="title-box" style="margin-bottom: 1.5rem;">
             <h2>اللغة الإنجليزية .. مفتاح مستقبلك 🔑</h2>
             <p>للاستفسار اتصل أو تواصل مباشرة عبر الواتساب</p>
-            <h3 style="color: var(--cool-blue); margin-top: 0.8rem; font-size: 1.4rem;" class="en-font">📞 01093056344</h3>
+            <h3 style="color: var(--cool-blue); margin-top: 0.8rem; font-size: 1.3rem;" class="en-font">📞 01093056344</h3>
         </div>
 
         <a href="https://wa.me/201093056344" target="_blank" class="btn-shimmer" style="margin-bottom: 2rem;">
@@ -667,17 +929,17 @@
     <!-- JavaScript Effects -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // 1️⃣ Preloader Hide
+        // Preloader
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.style.opacity = '0';
             setTimeout(() => preloader.style.visibility = 'hidden', 800);
         });
 
-        // 2️⃣ AOS Init
-        AOS.init({ duration: 700, once: true, offset: 50 });
+        // AOS
+        AOS.init({ duration: 700, once: true, offset: 30 });
 
-        // 3️⃣ Custom Cursor & Mouse Glow Tracker (Desktop Only)
+        // Cursor Tracker
         if (window.innerWidth > 768) {
             const cursor = document.getElementById('custom-cursor');
             const mouseGlow = document.getElementById('mouse-glow');
@@ -690,7 +952,27 @@
             });
         }
 
-        // 4️⃣ Typing Effect
+        // Gallery Modal Controls
+        function openGalleryModal() {
+            document.getElementById('gallery-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGalleryModal() {
+            document.getElementById('gallery-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openSingleModal(imgSrc) {
+            document.getElementById('single-img-target').src = imgSrc;
+            document.getElementById('single-img-modal').classList.add('active');
+        }
+
+        function closeSingleModal() {
+            document.getElementById('single-img-modal').classList.remove('active');
+        }
+
+        // Typing Effect
         const phrases = ["Learn English Like a Native", "IELTS & Grammar Expert", "Speak with Confidence"];
         let phraseIndex = 0;
         let charIndex = 0;
@@ -723,22 +1005,22 @@
         }
         document.addEventListener("DOMContentLoaded", typeEffect);
 
-        // 5️⃣ Glowing Cyber Constellation Particles Background
+        // Particles Background
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const particles = [];
-        const particleCount = window.innerWidth < 768 ? 35 : 65;
+        const particleCount = window.innerWidth < 768 ? 25 : 60;
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.radius = Math.random() * 2 + 1;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
                 this.color = Math.random() > 0.3 ? 'rgba(56, 189, 248, ' : 'rgba(245, 158, 11, ';
                 this.alpha = Math.random() * 0.5 + 0.2;
             }
@@ -755,7 +1037,7 @@
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = this.color + this.alpha + ')';
-                ctx.shadowBlur = 8;
+                ctx.shadowBlur = 6;
                 ctx.shadowColor = this.color + '0.8)';
                 ctx.fill();
                 ctx.shadowBlur = 0;
@@ -767,7 +1049,7 @@
         }
 
         function connectParticles() {
-            const maxDist = window.innerWidth < 768 ? 85 : 110;
+            const maxDist = window.innerWidth < 768 ? 80 : 110;
             for (let a = 0; a < particles.length; a++) {
                 for (let b = a + 1; b < particles.length; b++) {
                     const dx = particles[a].x - particles[b].x;
@@ -775,10 +1057,10 @@
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < maxDist) {
-                        const opacity = (1 - distance / maxDist) * 0.22;
+                        const opacity = (1 - distance / maxDist) * 0.2;
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(56, 189, 248, ${opacity})`;
-                        ctx.lineWidth = 0.7;
+                        ctx.lineWidth = 0.6;
                         ctx.moveTo(particles[a].x, particles[a].y);
                         ctx.lineTo(particles[b].x, particles[b].y);
                         ctx.stroke();
@@ -803,7 +1085,7 @@
             canvas.height = window.innerHeight;
         });
 
-        // 6️⃣ 3D Parallax Tilt Effect for Cards (Desktop Only)
+        // 3D Tilt
         if (window.innerWidth > 768) {
             document.querySelectorAll('.card-3d').forEach(card => {
                 card.addEventListener('mousemove', (e) => {
