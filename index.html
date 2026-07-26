@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mr. Zezo | Executive English Academy</title>
+    
+    <!-- Google Fonts, FontAwesome, AOS Animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #050811;
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --border-glow: rgba(56, 189, 248, 0.25);
+            
+            --cool-blue: #38bdf8;
+            --royal-blue: #2563eb;
+            --neon-blue: #00f0ff;
+            --gold: #f59e0b;
+            --gold-light: #fbbf24;
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+            width: 100%;
+        }
+
+        /* Desktop Only Cursor */
+        @media (min-width: 769px) {
+            * { cursor: none; }
+            #custom-cursor {
+                width: 12px;
+                height: 12px;
+                background: var(--cool-blue);
+                border-radius: 50%;
+                position: fixed;
+                pointer-events: none;
+                z-index: 9999;
+                transition: transform 0.1s ease;
+                box-shadow: 0 0 10px var(--cool-blue);
+            }
+            #mouse-glow {
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+                position: fixed;
+                pointer-events: none;
+                z-index: 1;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #custom-cursor, #mouse-glow { display: none !important; }
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #03050c;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loader-ring {
+            width: 70px;
+            height: 70px;
+            border: 4px solid rgba(56, 189, 248, 0.1);
+            border-top: 4px solid var(--cool-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px var(--cool-blue);
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: var(--gold-light);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Particles Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .en-font { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* Floating WhatsApp Button (Mobile Responsive) */
+        .float-wa {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #25d366;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: 0.3s ease;
+            text-decoration: none;
+            animation: pulseWa 2s infinite;
+        }
+
+        @keyframes pulseWa {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Navbar */
+        nav {
+            padding: 1.1rem 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 8, 17, 0.85);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--cool-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 7% 3rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 3rem;
+            min-height: 82vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text .subtitle-tag {
+            color: var(--gold-light);
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.9rem;
+            font-weight: 800;
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.12);
+            padding: 0.4rem 1.1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .hero-text h1 { font-size: 3.2rem; font-weight: 900; line-height: 1.2; margin-bottom: 0.5rem; }
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--cool-blue), #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(56, 189, 248, 0.3));
+        }
+
+        /* Typing Effect */
+        .typing-container {
+            font-size: 1.3rem;
+            color: var(--neon-blue);
+            font-weight: 800;
+            min-height: 40px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cursor-blink { animation: blink 0.7s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .hero-badges { display: flex; gap: 0.8rem; margin-bottom: 2.2rem; flex-wrap: wrap; }
+        .badge {
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid var(--border-glow);
+            padding: 0.5rem 1.1rem;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            color: var(--cool-blue);
+            font-weight: 700;
+        }
+
+        /* 3D Cards */
+        .img-card {
+            width: 310px;
+            height: 400px;
+            margin: 0 auto;
+            border-radius: 24px;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-glow);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(15px);
+        }
+
+        .img-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Sections */
+        section { padding: 4rem 7%; position: relative; z-index: 2; }
+        .title-box { text-align: center; margin-bottom: 3.2rem; }
+        .title-box h2 { font-size: 2.2rem; font-weight: 900; color: var(--text-main); margin-bottom: 0.4rem; }
+        .title-box p { color: var(--gold-light); font-size: 1.05rem; font-weight: 700; }
+
+        /* Grids */
+        .features-grid, .reviews-grid, .schedules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .glass-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 1.8rem;
+            backdrop-filter: blur(15px);
+            transition: 0.3s ease;
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--cool-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .stars { color: var(--gold-light); font-size: 1.1rem; margin-bottom: 0.8rem; }
+        .review-text { font-size: 0.95rem; color: var(--text-main); margin-bottom: 1.2rem; font-style: italic; }
+        .student-info h4 { font-size: 1.1rem; color: var(--cool-blue); font-weight: 800; }
+        .student-info p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Tables */
+        .schedule-header { text-align: center; padding-bottom: 1rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-glow); }
+        .schedule-header h3 { font-size: 1.5rem; color: var(--cool-blue); font-weight: 800; }
+        .schedule-table { width: 100%; border-collapse: collapse; }
+        .schedule-table th, .schedule-table td { padding: 0.9rem 0.4rem; text-align: center; font-size: 0.95rem; }
+        .schedule-table th { color: var(--gold-light); font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .schedule-table tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .class-name { font-weight: 800; color: var(--text-main); }
+        .time-badge {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--cool-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            display: inline-block;
+        }
+
+        /* Location Card */
+        .location-section { padding: 1rem 7% 3rem; z-index: 2; position: relative; }
+        .location-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+            backdrop-filter: blur(15px);
+        }
+
+        .location-info h2 { font-size: 1.4rem; color: var(--gold-light); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 10px; font-weight: 800; }
+        .location-info p { font-size: 1.1rem; color: var(--text-main); font-weight: 700; }
+
+        /* Button */
+        .btn-shimmer {
+            display: inline-block;
+            padding: 0.95rem 2.5rem;
+            background: linear-gradient(135deg, var(--royal-blue), #1d4ed8);
+            color: white;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+            transition: 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: rotate(30deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer { 0% { transform: translateX(-100%) rotate(30deg); } 100% { transform: translateX(100%) rotate(30deg); } }
+
+        /* 📱 ULTRA MOBILE OPTIMIZATIONS (Max Width 768px) */
+        @media (max-width: 768px) {
+            nav { padding: 0.9rem 5%; }
+            .logo { font-size: 1.35rem; }
+            .nav-links { display: none; }
+            
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 2.2rem 5% 1.5rem;
+                gap: 1.8rem;
+                min-height: auto;
+            }
+
+            .hero-text .subtitle-tag { font-size: 0.85rem; padding: 0.35rem 0.9rem; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .typing-container { font-size: 1.1rem; justify-content: center; min-height: 35px; }
+            .hero-badges { justify-content: center; gap: 0.5rem; }
+            .badge { font-size: 0.8rem; padding: 0.4rem 0.85rem; }
+            
+            .img-card { width: 250px; height: 330px; border-radius: 18px; }
+            
+            section { padding: 2.5rem 5%; }
+            .title-box { margin-bottom: 2rem; }
+            .title-box h2 { font-size: 1.6rem; }
+            .title-box p { font-size: 0.95rem; }
+            
+            .features-grid, .reviews-grid, .schedules-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .glass-box { padding: 1.4rem; border-radius: 16px; }
+            
+            .schedule-header h3 { font-size: 1.3rem; }
+            .schedule-table th, .schedule-table td { padding: 0.75rem 0.2rem; font-size: 0.88rem; }
+            .time-badge { font-size: 0.82rem; padding: 0.25rem 0.6rem; }
+            
+            .location-section { padding: 1rem 5% 2.5rem; }
+            .location-card {
+                text-align: center;
+                justify-content: center;
+                flex-direction: column;
+                padding: 1.5rem 1.2rem;
+                gap: 1.2rem;
+            }
+
+            .location-info h2 { font-size: 1.25rem; justify-content: center; }
+            .location-info p { font-size: 0.98rem; }
+
+            .btn-shimmer {
+                width: 100%;
+                display: block;
+                padding: 0.9rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .float-wa {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 15px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-ring"></div>
+        <div class="loader-text en-font">MR. ZEZO EXECUTIVE ACADEMY</div>
+    </div>
+
+    <!-- Custom Cursor & Mouse Glow (Desktop Only) -->
+    <div id="custom-cursor"></div>
+    <div id="mouse-glow"></div>
+
+    <!-- Particles Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Floating WhatsApp Icon -->
+    <a href="https://wa.me/201093056344" class="float-wa" target="_blank" title="تواصل مع مستر زيزو">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo en-font">
+            <i class="fa-solid fa-crown"></i> Mr. Zezo
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about">الأكاديمية</a></li>
+            <li><a href="#features">المميزات</a></li>
+            <li><a href="#reviews">آراء الطلاب</a></li>
+            <li><a href="#schedule">المواعيد والمقر</a></li>
+            <li><a href="#contact">التواصل</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="hero-text" data-aos="fade-up" data-aos-duration="900">
+            <span class="subtitle-tag en-font">6 سنوات من الخبرة والعطاء (2026)</span>
+            <h1>Mr. Zezo<br><span>مستر عبدالعزيز الفقي</span></h1>
+            
+            <!-- Typing Effect Container -->
+            <div class="typing-container en-font">
+                <span id="typed-text"></span><span class="cursor-blink">|</span>
+            </div>
+
+            <div class="hero-badges">
+                <span class="badge"><i class="fa-solid fa-star"></i> الصفوف الإعدادية والابتدائية</span>
+                <span class="badge"><i class="fa-solid fa-trophy"></i> أوائل المدارس كل عام</span>
+            </div>
+
+            <a href="https://wa.me/201093056344" target="_blank" class="btn-shimmer">
+                <i class="fa-brands fa-whatsapp"></i> احجز الآن
+            </a>
+        </div>
+
+        <div class="hero-image" data-aos="zoom-in" data-aos-duration="900">
+            <div class="img-card card-3d">
+                <img src="https://via.placeholder.com/310x400" alt="Mr Zezo English">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="title-box" data-aos="fade-up">
+            <h2>منهجية وتفوق مستر زيزو 🚀</h2>
+            <p>منظومة تعليمية متكاملة لضمان التقفيل والدرجات النهائية</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <h3>شرح مبسط وسهل</h3>
+                <p>يصل للطلاب بكل سهولة ويسر وبطرق مبتكرة لتبسيط المعلومة.</p>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="150">
+                <div class="feature-icon"><i class="fa-solid fa-file-lines"></i></div>
+                <h3>مذكرات وشيتات خاصة</h3>
+                <p>تبسيط وتلخيص لأهم النقاط والقواعد والكلمات المكررة بالامتحانات.</p>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fa-solid fa-headphones"></i></div>
+                <h3>تدريب على كل المهارات</h3>
+                <p>تنمية وتطوير مهارات (الاستماع - التحدث - القراءة - الكتابة).</p>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="250">
+                <div class="feature-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                <h3>اختبارات دورية</h3>
+                <p>امتحانات مستمرة لقياس مستواك أولاً بأول وتقييم النقاط الضعيفة.</p>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon"><i class="fa-solid fa-users-gear"></i></div>
+                <h3>متابعة فردية ومستمرة</h3>
+                <p>خطة خاصة تناسب مستوى كل طالب مع متابعة دورية مع ولي الأمر.</p>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="350">
+                <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+                <h3>نتائج حقيقية وبفضل الله</h3>
+                <p>كل سنة أربع أو خمس طلاب من الأوائل طالعين مقفلين درجات بحمد الله.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews">
+        <div class="title-box" data-aos="fade-up">
+            <h2>آراء وتقييمات الطلاب 🌟</h2>
+            <p>ما يقوله أوائل المدارس وأولياء الأمور عن أسلوب مستر زيزو</p>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="100">
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"بجد مستر زيزو غير فكرتي خالص عن الإنجليزي! القواعد والجرامر بقوا أسهل حاجة عندي وففلت المادة بفضل الله ثم الشرح والمذكرات البسيطة."</p>
+                <div class="student-info">
+                    <h4>أحمد محمد</h4>
+                    <p>المركز الأول - الثالث الإعدادي</p>
+                </div>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="150">
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"المتابعة الدورية والامتحانات الأسبوعية خلت ابني يقفل الامتحان النهائي بدون أي قلق، شكرًا جداً لمستر عبدالعزيز على المجهود العظيم."</p>
+                <div class="student-info">
+                    <h4>ولي أمر الطالبة مريم</h4>
+                    <p>الصف السادس الابتدائي</p>
+                </div>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="200">
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"أحسن مستر بيشرح محادثات وصوتيات، أسلوبه ممتع ومش بنحس بالوقت في الحصة خالص! بنطلع فاهمين كل حاجة من الكلاس."</p>
+                <div class="student-info">
+                    <h4>يوسف أحمد</h4>
+                    <p>المركز الثاني - الثاني الإعدادي</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedules Section -->
+    <section id="schedule">
+        <div class="title-box" data-aos="fade-up">
+            <h2>جدول المواعيد والصفوف الدراسية 🗓️</h2>
+            <p>مواعيد دروس الصفوف الابتدائية والإعدادية</p>
+        </div>
+
+        <div class="schedules-grid">
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="100">
+                <div class="schedule-header">
+                    <h3>المرحلة الإعدادية 🎓</h3>
+                </div>
+                <table class="schedule-table">
+                    <thead>
+                        <tr><th>الصف الدراسي</th><th>المواعيد</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="class-name">الأول الإعدادي</td><td>الإثنين والخميس <span class="time-badge">5:00</span></td></tr>
+                        <tr><td class="class-name">الثاني الإعدادي</td><td>الإثنين والخميس <span class="time-badge">6:00</span></td></tr>
+                        <tr><td class="class-name">الثالث الإعدادي</td><td>الإثنين والخميس <span class="time-badge">7:00</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="glass-box card-3d" data-aos="fade-up" data-aos-delay="200">
+                <div class="schedule-header">
+                    <h3>المرحلة الابتدائية 📚</h3>
+                </div>
+                <table class="schedule-table">
+                    <thead>
+                        <tr><th>الصف الدراسي</th><th>المواعيد</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="class-name">أولي ابتدائي</td><td>الأحد والأربعاء <span class="time-badge">2:00</span></td></tr>
+                        <tr><td class="class-name">ثانيه ابتدائي</td><td>الأحد والأربعاء <span class="time-badge">3:00</span></td></tr>
+                        <tr><td class="class-name">ثالثه ابتدائي</td><td>الأحد والأربعاء <span class="time-badge">4:00</span></td></tr>
+                        <tr><td class="class-name">الرابع ابتدائي</td><td>السبت <span class="time-badge">11:00</span> - الثلاثاء <span class="time-badge">2:00</span></td></tr>
+                        <tr><td class="class-name">الخامس ابتدائي</td><td>السبت <span class="time-badge">12:00</span> - الثلاثاء <span class="time-badge">3:00</span></td></tr>
+                        <tr><td class="class-name">السادس ابتدائي</td><td>السبت <span class="time-badge">1:00</span> - الثلاثاء <span class="time-badge">4:00</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <div class="location-section" id="location" data-aos="fade-up">
+        <div class="location-card glass-box">
+            <div class="location-info">
+                <h2><i class="fa-solid fa-location-dot"></i> مقر الدرس والحضور:</h2>
+                <p>آخر شارع مكنة طحين أ / طه بردانة .. منزل الحاج الشحات خفاجي</p>
+            </div>
+            <a href="https://wa.me/201093056344" target="_blank" class="btn-shimmer" style="padding: 0.75rem 1.6rem; font-size: 0.98rem;">
+                <i class="fa-solid fa-map-location-dot"></i> استفسار عن الموقع
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <section id="contact" style="text-align: center; border-top: 1px solid var(--border-glow);" data-aos="fade-up">
+        <div class="title-box" style="margin-bottom: 1.5rem;">
+            <h2>اللغة الإنجليزية .. مفتاح مستقبلك 🔑</h2>
+            <p>للاستفسار اتصل أو تواصل مباشرة عبر الواتساب</p>
+            <h3 style="color: var(--cool-blue); margin-top: 0.8rem; font-size: 1.4rem;" class="en-font">📞 01093056344</h3>
+        </div>
+
+        <a href="https://wa.me/201093056344" target="_blank" class="btn-shimmer" style="margin-bottom: 2rem;">
+            <i class="fa-brands fa-whatsapp"></i> احجز الآن
+        </a>
+
+        <div style="margin-top: 2rem; color: var(--text-muted); font-size: 0.85rem;">
+            Crafted with 🤍 as a Special Gift for Mr. Zezo | 2026
+        </div>
+    </section>
+
+    <!-- JavaScript Effects -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 1️⃣ Preloader Hide
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => preloader.style.visibility = 'hidden', 800);
+        });
+
+        // 2️⃣ AOS Init
+        AOS.init({ duration: 700, once: true, offset: 50 });
+
+        // 3️⃣ Custom Cursor & Mouse Glow Tracker (Desktop Only)
+        if (window.innerWidth > 768) {
+            const cursor = document.getElementById('custom-cursor');
+            const mouseGlow = document.getElementById('mouse-glow');
+
+            window.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                mouseGlow.style.left = e.clientX + 'px';
+                mouseGlow.style.top = e.clientY + 'px';
+            });
+        }
+
+        // 4️⃣ Typing Effect
+        const phrases = ["Learn English Like a Native", "IELTS & Grammar Expert", "Speak with Confidence"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextElement = document.getElementById("typed-text");
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typedTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 30 : 70;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 1800;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 400;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener("DOMContentLoaded", typeEffect);
+
+        // 5️⃣ Glowing Cyber Constellation Particles Background
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = window.innerWidth < 768 ? 35 : 65;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 2 + 1;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.color = Math.random() > 0.3 ? 'rgba(56, 189, 248, ' : 'rgba(245, 158, 11, ';
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color + '0.8)';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            const maxDist = window.innerWidth < 768 ? 85 : 110;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    const dx = particles[a].x - particles[b].x;
+                    const dy = particles[a].y - particles[b].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDist) {
+                        const opacity = (1 - distance / maxDist) * 0.22;
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${opacity})`;
+                        ctx.lineWidth = 0.7;
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 6️⃣ 3D Parallax Tilt Effect for Cards (Desktop Only)
+        if (window.innerWidth > 768) {
+            document.querySelectorAll('.card-3d').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    card.style.transform = `perspective(1000px) rotateX(${-y / 15}deg) rotateY(${x / 15}deg) translateY(-8px)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+s
